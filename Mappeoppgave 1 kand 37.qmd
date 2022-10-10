@@ -1,0 +1,289 @@
+---
+title: “SOK-1004, høst 2022, Mappeoppgave 1”
+
+author: “37”
+
+format: 
+
+pdf:
+
+toc: true
+
+number-sections: true
+
+colorlinks: true
+---
+
+# **Oppgave 1. Årsaker og konsekvenser av ulikhet**
+
+## **Oppgave 1a**
+
+Med inntektsulikhet i et land så måler man ulikhetene når det kommer til inntekt, i en avgrenset periode, som oftes er dette et år. Det er Gini-koeffisienten som måler disse inntektsulikehetene, denne tar utgangspunkt i Lorenz-kurven. Lorenz-kurven viser sammenhengen mellom andel personer og andel av totalinntekt innad i et land eller et avgrenset område. Dette viser da en sammenheng i fordelingene av inntekt og formue blant menneskene i et land.
+
+## **Oppgave 1b**
+
+Det kan være mange grunner til økt innktektsfordeling i samfunnet, som for eksempel globalisering og teknologisk utvikling. Globaliseringen bidrar til at produsenter for eksempel flytter produskjonen av varer til andre "billigere" land, og dette bidrar til mindre arbeidsplasser og mindre penger fordelt innad i Norge, samt at mer penger blir fordelt på eierne i bedriften som outsourcer. Globaliseringen gjør også at land samarbeider mer over landegrenser slik at noen varer eller tjenester ikke er nødvendig for land som Norge å produsere. Teknologisk utvikling gjør at mange arbeidsfelt innfører mer maskiner og automatiserer arbeidsoppgavene, dette fører til at arbeiderne som var i disse stillingene blir byttet ut, dette gjelder for eksempel, lagerarbeidere, arbeidere med produksjon etc. En annen grunn til at inntektene blir fordelt ulikt i samfunnet kan være med kravene til høyere utdanning, det er blitt et større behov for høyere utdanning til forskjellige arbeidsfeltene, dette gjør at mennesker uten denne aktuelle utdanningen ikke henger med i høyere inntekter.
+
+## **Oppgave 1c**
+
+Det er flere eventuelle konsekvenser inntektsulikhet kan ha, feks mulighetene mennesker har i livet, mangelfull nyttiggjøring av mennesklige ressurser, samt tillitsnedgang. Mulighetene til mennesker kan påvirkes siden de som kommer fra ressurs-svake familier ikke stiller like godt som andre som kommer fra bedre kår, dette kan føre til mindre utdannelse, som igjen bidrar til at de stiller svakere på arbeidsmarkedet. Barn til fattige foreldre gjør det ofte dårligere på skolen, og henger ikke like godt med når det kommer til utdanning. Hvis man ser på land med stor ulikhet i inntektsfordelingen innad i landet så kan man se at tilliten er svekket, dette gjør at man stoler mindre på dem som er rundt deg, og spesielt på staten som styrer, mens i land der det er mindre ulikheter så stoler man mer på stat og andre rundt. Tilliten kan medføre en rekke negative konsekvenser som at det er vankeligere å gjøre omstillinger, og en vekst i hvor man henter informasjonen sin fra.
+
+# **Oppgave 2. Måling av ulikhet**
+
+## **Oppgave 2a**
+
+Gini-koeffisient begregnes ved at man ser på hvor mye inntekt og formue det totalt er innad i et land, og deretter ser hvordan dette er fordelt på befolkningen. Resultatet til en Gini-koeffisient er et sted mellom 0 og 1, der 0 er det ønskelige, altså minst ulikhet. Gini-koeffisient bør da vise hvor stor ulikhet det er i et land.
+
+P90P10 beregnes ved at man setter befolkningen opp stigende, deretter deler alle inn i 10 grupper, eller desiler som det kalles. Man skal da se på personen som har inntekt litt høyere enn 90 prosent og personen som har inntekt litt lavere inntekt enn 90 prosent av befolkningen. Et eksempel som ssb brukte var "*Dersom forholdstallet P90/P10 måles til 2,5, betyr det at personen med høyere inntekt enn 90 prosent av befolkningen har 2,5 ganger så høy inntekt som personen med lavere inntekt enn 90 prosent av befolkningen.*".
+
+S80S20 beregnes ved at ssb tar gjennomsnittsinntekten til de 20% med høyest inntekt og de 20% med lavets inntekt. Av denne så får man ett høyere forholdstall, og når SSB utførte denne i Norge ble tallet på 3,6, altså de 20% rikeste i samfunnet hadde i gjennomsnitt 3,6 ganger høyere inntekt enn de 20% fattigere.
+
+## **Oppgave 2b**
+
+Styrker med disse målene er selvsagt for å se ulikhetene i et land, ved bruken av disse målene er det enklere å få et overordna syn over landet. En annen styke er at man enkelt kan sammenligne forskjellige land, siden all beregning av Gini-koeffisient har samme formula.
+
+Noen ulemper eller svakheter ved disse målene er at man kanskje ikke går nok i dybden på hva som kan være årsakene til ulikhetene, som feks offentlige støtter til befolkningen, Norge er et land som er god på å fordele ut til befolkningene i form av Nav og andre offentlige organer, mens land som USA kanskje ikke er like gode på dette slik at ulikhetene kan være anderledes der.
+
+Gini-koeffisient passer best for å få et mest mulig overordnet syn på befolkningen, for der tas alle med i beregningen. P90P10 passer best hvis man skal se på de aller rikeste og aller fattigste i samfunnet, for der tar man bare de 10% rikeste og de 10% fattigste inn i betrakning. S80S20 passer best hvis man skal ha ett mest mulig realistisk syn på all inntekten, fordi da tar man gjennomsnittsinntekten til de 20% rikeste og de 20% fattigste i samfunnet, og dermed får man et mer realistisk syn på det enn P90P10.
+
+## **Oppgave 3. Inntektsulikhet i Norge 2008-2019**
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+
+```
+
+```{r}
+url <- "https://raw.githubusercontent.com/uit-sok-1004-h22/uit-sok-1004-h22.github.io/main/data/oecd_data_nor.csv"
+
+oecd_n <- url %>% 
+  read_csv()
+```
+
+## **Oppgave 3a**
+
+```{r}
+oecd_n %>% 
+  filter(MEASURE =="GINI") %>% 
+  
+  ggplot(aes(x = Year, y=Value, color=MEASURE))+ 
+  geom_point()+ 
+  
+  scale_x_continuous(breaks=c(2008, 2010, 2012, 2014, 2016, 2018))+ 
+  labs (title = " Gini-koeffisient fordelt på ulik befolkning, 2008-2019", y = "Gini-koefisient", x= "År")+ 
+  
+  facet_wrap(~ factor (AGE, (levels=c("TOT", "WA", "OLD"))), 
+                       labeller = as_labeller(
+                         c("TOT" = "Alle", 
+                           "WA" = "Arbeidere", 
+                           "OLD" = "Pensjonert")))+ 
+  
+  theme(legend.position = "bottom") 
+```
+
+Denne figuren viser Gini-koeffisienten i ulike befolknings-klasser, i tidsperioden 2008 til 2019. det er tre forskjellige spredningsplotter, der den første viser hele befolkningen, den andre viser arbeidere, og den siste viser pensjonerte. alt i alt så viser disse gini_scoren i den aktuelle perioden i de forskjellige klassene.
+
+Gini-målene viser at utviklingen i ulikhet i Norge har gått opp, altså det er blitt mer ulikheter blant befolkningen, i alle de aktuelle klassene, man ser også at det var en stor oppgang i 2015 som året etter gikk ned. Man ser også at det har vært en generell økning i Gini-koeffisienten, noe som tyder på at det er mer ulikheter i landet.
+
+Forskjeller i de forskjellige klassen skyldes at pensjonister generelt har relativt like støtter fra staten, de fleste pensjonister har samme støtte fra Nav. Arbeidere kan tjene veldig forskjellig, derfor er Gini-koeffisienten større hos dem. Som man ser i den lave Gini-koeffisienten til de pensjonerte så ser man at statens skatte- og pensjonssystemer fungerer, men denne blir vanskelig å omplassere til arbeiderne. En av grunnene til at det kanskje er store ulikheter hos arbeiderne kan være at de rikeste har mye uskattbare inntekter og eiendeler, dette medfører at de sitter igjen med mer og at staten sitter igjen med mindre.
+
+## **Oppgave 3b**
+
+Lag en ny figur hvor du bruker de andre ulikhetsmålene (P90P10 og S80S20) til å undersøke ulikhet mellom arbeidere og pensjonister i tidsperioden 2008-2019. Her kan du for eksempel tegne et spredningsplott for hver gruppe. Bruk figuren som grunnlag for å beskrive inntektsulikhet. Er svarene dine det samme som i 3a? Hvorfor/hvorfor ikke?
+
+Hvis vi bruker P90P10 og S80S20 for å se på ulikhetene med samme primisser som grafen ovenfor, så vil vi se litt forskjellige ting. På figuren som viser P90P10 så ser vi den er relativ konstant alle årene, med litt opp- og nedgang. For hele befolkningen så er den fra 2014 og til 2019 på ca 3,10, altså personen med inntekt høyere enn 90% har en inntekt 3,10 ganger høyere.
+
+S80S10 viser at gjennomsnittsinntekten til de 20% rikeste i Norge var på mellom 3,8 til 4,5 ganger så høy i tidsperioden 2008-2019 for arbeiderne, mens for de pensjonerte var det på mellom 2,8 til 3,2 i samme periode. Dette viser at ulikhetene til pensjonister fortsatt er lavere enn arbeiderne.
+
+Når vi bruker disse målene får vi et bedre innblikk i ulikhetene ved at vi får vite hvor mange ganger rikere toppen er enn bunnen istedenfor Gini-koeffisienten er. Gini-koeffisienten er litt vagt, det gir oss ikke ett dypere innblikk.
+
+```{r}
+oecd_n %>% 
+  filter(MEASURE =="P90P10") %>% 
+  
+  ggplot(aes(x = Year, y=Value, color=MEASURE))+ 
+  geom_point()+ 
+  
+  scale_x_continuous(breaks=c(2008, 2010, 2012, 2014, 2016, 2018))+ 
+  labs (title = " P90P10 fordelt på ulik befolkning, 2008-2019", y = "GP90P10", x= "År")+ 
+  
+  facet_wrap(~ factor (AGE, (levels=c("TOT", "WA", "OLD"))), 
+                       labeller = as_labeller(
+                         c("TOT" = "Alle", 
+                           "WA" = "Arbeidere", 
+                           "OLD" = "Pensjonert")))+ 
+  
+  theme(legend.position = "bottom") 
+
+
+oecd_n %>% 
+  filter(MEASURE =="S80S20") %>% 
+  
+  ggplot(aes(x = Year, y=Value, color=MEASURE))+ 
+  geom_point()+ 
+  
+  scale_x_continuous(breaks=c(2008, 2010, 2012, 2014, 2016, 2018))+ 
+  labs (title = " S80S20 fordelt på ulik befolkning, 2008-2019", y = "S80S20", x= "År")+ 
+  
+  facet_wrap(~ factor (AGE, (levels=c("TOT", "WA", "OLD"))), 
+                       labeller = as_labeller(
+                         c("TOT" = "Alle", 
+                           "WA" = "Arbeidere", 
+                           "OLD" = "Pensjonert")))+ 
+  
+  theme(legend.position = "bottom") 
+```
+
+# **Oppgave 4. Casestudie: Tromsø kommune 2015**
+
+Skattetall for Troms fylke fra 2015.
+
+```{r}
+url <- "https://raw.githubusercontent.com/uit-sok-1004-h22/uit-sok-1004-h22.github.io/main/data/skatt_troms_2015.RDS"
+
+skatt_troms_2015 <- url %>%
+  url() %>%
+  gzcon() %>% 
+  readRDS()
+```
+
+```{r}
+tromso <-  filter(skatt_troms_2015, kommnr == "1902") 
+
+```
+
+```{r}
+tromso1 <- tromso %>%
+  mutate(nettoinntekt = (inntekt - skatt)) %>%
+  mutate(bruttoinntekt = inntekt) 
+  
+tromso1[tromso1 <0] <- 0
+
+
+
+```
+
+## **Oppgave 4a**
+
+Tegn et spredningsplott med fødselsår på x-aksen og inntekt (før og etter skatt) på y-aksen. Hvordan kan vi tolke dette bildet i forhold til inntektsulikhet i Tromsø kommune, og hvilken rolle spiller skattesystemet her?
+
+```{r}
+tromso1 %>% 
+  mutate(bruttoinntekt=bruttoinntekt/1000) %>%
+  mutate(nettoinntekt=nettoinntekt/1000) %>%
+  ggplot(aes(x=fodt, y=nettoinntekt, col=bruttoinntekt)) +
+  geom_point() +
+  labs(x="Fødselsår",
+       y="Inntekt",
+       title = "Inntekt før og etter skatt Tromsø") +
+  theme_minimal()
+
+```
+
+## **Oppgave 4b**
+
+```{r}
+df <- tromso %>%
+  select(inntekt) %>% 
+  quantile(probs = seq(0,1, .01), na.rm=TRUE)
+
+
+df <- as_tibble(df)
+
+df <- df %>% 
+  add_column(Persentil=c(0:100))
+
+df <- df %>% 
+  rename(inntekt_fr_skatt=value)
+
+
+df %>% 
+  ggplot(aes(x=Persentil,y=inntekt_fr_skatt/1000)) +
+  geom_col()+
+  labs (title = "Inntektsfordeling i Tromsø 2015 (fr skatt)",
+        y = "Inntekt (1000kr)", x= "Persentil")+
+  theme_minimal()
+
+```
+
+Vi ser at grafen ser relativ lik ut etter vi har satt inn de nye premissene, som inntekt etter skatt. Eneste forskjellen jeg klarer å se er at y-aksen er kuttet ned med 10 000, og dette skjer fordi det er skatt med inn i bildet.
+
+```{r}
+df1 <- tromso1 %>%
+  select(nettoinntekt) %>% 
+  quantile(probs = seq(0,1, .01), na.rm=TRUE)
+
+
+df1 <- as_tibble(df1)
+
+df1 <- df1 %>% 
+  add_column(Persentil=c(0:100))
+df1 <- df1 %>% 
+  rename(inntekt_etter_skatt=value)
+
+
+df1 %>% 
+  ggplot(aes(x=Persentil,y=inntekt_etter_skatt/1000)) +
+  geom_col()+
+  labs (title = "Inntektsfordeling i Tromsø 2015 (etter skatt)",
+        y = "Inntekt (1000kr)", x= "Persentil")+
+  theme_minimal()
+```
+
+## **Oppgave 4c**
+
+```{r}
+library(gglorenz)
+
+```
+
+```{r}
+# lag data for Harstad
+
+harstad <-filter(skatt_troms_2015, kommnr == "1903")
+
+#
+
+ggplot(harstad, aes(inntekt))+
+  stat_lorenz()+ # tegner Lorenz
+  annotate_ineq(harstad$inntekt)+ # beregner Gini
+  labs (x="andel av befolkningen", y= "andel av inntekt", title = "Lorenz-kurve, Harstad kommune 2015")+
+  theme_minimal()
+```
+
+Som man kan se fra Gini-koeffisientene er at Tromsø har større ulikheter enn det vi har på lands-basis, Norge var ca 0,28 i samme periode, mens Tromsø var 0,47 før skatt og 0,44 etter skatt. Mulige forklaringer på dette kan være at det er mindre "deltakere" i dette, Tromsø er ikke så stort forhold til andre byer, en annen grunn kan være at vi feks har mange lavlønnede mennesker og kanskje mange høyt lønnede mennesker.
+
+```{r}
+#Lorentz med inntekt før skatt
+tromso <-filter(skatt_troms_2015, kommnr == "1902")
+
+
+ggplot(tromso, aes(inntekt))+
+  stat_lorenz()+ 
+  annotate_ineq(tromso$inntekt)+
+  labs (x="andel av befolkningen", y= "andel av inntekt før skatt", title = "Lorenz-kurve, Tromsø kommune 2015(før skatt)")+
+  theme_minimal()
+```
+
+```{r}
+#Lorentz med inntekt etter skatt 
+tromso1 %>%
+  mutate(nettoinntekt = inntekt - skatt)
+
+ggplot(tromso1, aes(nettoinntekt))+
+  stat_lorenz()+ 
+  annotate_ineq(tromso1$nettoinntekt)+ 
+  labs (x="andel av befolkningen", y= "andel av inntekt", title = "Lorenz-kurve, Tromsø kommune 2015(etter skatt)")+
+  theme_minimal()
+```
+
+# Referanser
+
+Epland, J., & Tuv, N. (2019, mai 9). *Statistisk sentralbyrå.* Hentet oktober 8, 2022 fra Slik måler SSB ulikhet: https://www.ssb.no/inntekt-og-forbruk/inntekt-og-formue/statistikk/inntekts-og-formuesstatistikk-for-husholdninger/artikler/slik-maler-ssb-ulikhet
+
+NHO. (u.d.). *nho.no.* Hentet oktober 7, 2022 fra Verden og oss - Næringslivets perspektivmelding 2018: https://www.nho.no/siteassets/publikasjoner/naringslivets-perspektivmelding/pdf-er-okt18/nho_perspektivmeldingen_6\_okende-ulikhet.pdf
+
+Samfunnspolitisk avdeling i LO. (2021, august). *lo.no.* Hentet oktober 4, 2022 fra Litt om økonomisk ulikhet og tilknyttende utfordringer: https://www.lo.no/globalassets/okonomi-og-samfunn/samfunnsnotat-nr-3.-21\-\--litt-om-okonomisk-ulikhet-og-tilknyttede-utfordringer.pdf
+
+ 
